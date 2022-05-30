@@ -41,16 +41,34 @@ const HorizontalLine = () => {
   );
 };
 
-const CurrentTweet = ({}) => {
+const CurrentTweet = ({ tueet }) => {
+  console.log("tueettt ", tueet);
   return (
-    <div
-      style={{ height: 200, width: "70%", backgroundColor: "#dedede" }}
-    ></div>
+    <>
+      <div style={{ height: 200, width: "70%", backgroundColor: "#dedede" }}>
+        {tueet?.text}
+      </div>
+      <div
+        onClick={() => {
+          console.log("TODO get new tueet");
+        }}
+        style={{
+          height: 30,
+          width: 100,
+          backgroundColor: "#dedede",
+          alignSelf: "end",
+          marginTop: 15,
+          borderRadius: 5,
+          textAlign: "center",
+        }}
+      >
+        <span>REFRESH</span>
+      </div>
+    </>
   );
 };
 
 function App() {
-  const [tueets, setTueets] = useState([]);
   const [tueet, setTueet] = useState("");
   const [text, setText] = useState("");
 
@@ -58,11 +76,11 @@ function App() {
     fetch("http://localhost:8000/get/tueets")
       .then((res) => res.json())
       .then((res) => {
-        setTueets(res.data);
+        setTueet(res.data);
       });
   }, []);
 
-  console.log(tueets);
+  console.log(tueet);
 
   return (
     <div className="custom-field">
@@ -82,7 +100,7 @@ function App() {
       >
         <InputField text={text} setText={setText} />
         <HorizontalLine />
-        <CurrentTweet />
+        <CurrentTweet tueet={tueet} />
       </div>
       <div style={{ flex: 1 }}>
         <div
