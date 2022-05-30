@@ -4,10 +4,9 @@ import "./App.css";
 
 const InputField = ({ setText, text }) => {
   return (
-    <div>
+    <div style={{ width: "70%" }}>
       <div
         style={{
-          width: "70%",
           flexDirection: "column",
           flex: 1,
           border: "1px solid",
@@ -24,6 +23,29 @@ const InputField = ({ setText, text }) => {
         />
       </div>
     </div>
+  );
+};
+
+const HorizontalLine = () => {
+  return (
+    <div
+      id="borderBottom"
+      style={{
+        marginTop: 10,
+        marginBottom: 10,
+        width: "100%",
+        height: 20,
+        borderBottom: "1px solid #dedede",
+      }}
+    />
+  );
+};
+
+const CurrentTweet = ({}) => {
+  return (
+    <div
+      style={{ height: 200, width: "70%", backgroundColor: "#dedede" }}
+    ></div>
   );
 };
 
@@ -48,16 +70,8 @@ function App() {
         }}
       >
         <InputField text={text} setText={setText} />
-
-        <div
-          id="borderBottom"
-          style={{
-            marginTop: 10,
-            width: "100%",
-            height: 20,
-            borderBottom: "1px solid #dedede",
-          }}
-        />
+        <HorizontalLine />
+        <CurrentTweet />
       </div>
       <div style={{ flex: 1 }}>
         <div
