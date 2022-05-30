@@ -58,7 +58,7 @@ const HorizontalLine = () => {
   );
 };
 
-const CurrentTweet = ({ tueet }) => {
+const CurrentTweet = ({ tueet, refresh }) => {
   console.log("tueettt ", tueet);
   return (
     <>
@@ -75,9 +75,7 @@ const CurrentTweet = ({ tueet }) => {
         {tueet?.text}
       </div>
       <div
-        onClick={() => {
-          console.log("TODO get new tueet");
-        }}
+        onClick={refresh}
         style={{
           height: 30,
           width: 100,
@@ -107,9 +105,10 @@ function App() {
   const [tueetSimilar, setTueetSimilar] = useState([]);
   const [text, setText] = useState("");
 
-  useEffect(() => {
-    fetch("http://localhost:8000/get/tueets")
+  const fetchTueet = () => {
+    return fetch("http://localhost:8000/get/tueets")
       .then((res) => res.json())
+<<<<<<< HEAD
       .then((res) => {
         console.log("res data", res);
         setTueet(res?.random);
@@ -118,6 +117,14 @@ function App() {
   }, []);
 
   console.log("---", tueet);
+=======
+      .then((res) => setTueet(res.data));
+  };
+
+  useEffect(() => {
+    fetchTueet();
+  }, []);
+>>>>>>> cabc051459997c0ffd1f01624c96d26b38bec98c
 
   return (
     <div className="custom-field">
@@ -137,7 +144,7 @@ function App() {
       >
         <InputField text={text} setText={setText} />
         <HorizontalLine />
-        <CurrentTweet tueet={tueet} />
+        <CurrentTweet tueet={tueet} refresh={fetchTueet} />
       </div>
       <div style={{ flex: 1 }}>
         {tueetSimilar.map((t, idx) => {
