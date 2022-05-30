@@ -41,7 +41,7 @@ const HorizontalLine = () => {
   );
 };
 
-const CurrentTweet = ({ tueet }) => {
+const CurrentTweet = ({ tueet, refresh }) => {
   console.log("tueettt ", tueet);
   return (
     <>
@@ -49,9 +49,7 @@ const CurrentTweet = ({ tueet }) => {
         {tueet?.text}
       </div>
       <div
-        onClick={() => {
-          console.log("TODO get new tueet");
-        }}
+        onClick={refresh}
         style={{
           height: 30,
           width: 100,
@@ -72,15 +70,15 @@ function App() {
   const [tueet, setTueet] = useState("");
   const [text, setText] = useState("");
 
-  useEffect(() => {
-    fetch("http://localhost:8000/get/tueets")
+  const fetchTueet = () => {
+    return fetch("http://localhost:8000/get/tueets")
       .then((res) => res.json())
-      .then((res) => {
-        setTueet(res.data);
-      });
-  }, []);
+      .then((res) => setTueet(res.data));
+  };
 
-  console.log(tueet);
+  useEffect(() => {
+    fetchTueet();
+  }, []);
 
   return (
     <div className="custom-field">
@@ -100,7 +98,7 @@ function App() {
       >
         <InputField text={text} setText={setText} />
         <HorizontalLine />
-        <CurrentTweet tueet={tueet} />
+        <CurrentTweet tueet={tueet} refresh={fetchTueet} />
       </div>
       <div style={{ flex: 1 }}>
         <div
