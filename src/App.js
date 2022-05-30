@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./App.css";
 
@@ -28,8 +28,19 @@ const InputField = ({ setText, text }) => {
 };
 
 function App() {
+  const [tueets, setTueets] = useState([]);
   const [tueet, setTueet] = useState("");
   const [text, setText] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:8000/get/tueets")
+      .then((res) => res.json())
+      .then((res) => {
+        setTueets(res.data);
+      });
+  }, []);
+
+  console.log(tueets);
 
   return (
     <div className="custom-field">
