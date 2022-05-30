@@ -108,23 +108,15 @@ function App() {
   const fetchTueet = () => {
     return fetch("http://localhost:8000/get/tueets")
       .then((res) => res.json())
-<<<<<<< HEAD
       .then((res) => {
-        console.log("res data", res);
         setTueet(res?.random);
         setTueetSimilar(res?.similar);
       });
-  }, []);
-
-  console.log("---", tueet);
-=======
-      .then((res) => setTueet(res.data));
   };
 
   useEffect(() => {
     fetchTueet();
   }, []);
->>>>>>> cabc051459997c0ffd1f01624c96d26b38bec98c
 
   return (
     <div className="custom-field">
