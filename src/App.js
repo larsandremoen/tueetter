@@ -2,6 +2,23 @@ import { useState, useEffect } from "react";
 
 import "./App.css";
 
+const SimilarTueet = ({ tueet }) => {
+  console.log("hee ", tueet);
+  return (
+    <div
+      style={{
+        margin: 5,
+        backgroundColor: "#dedede",
+        borderRadius: 5,
+        height: 200,
+        width: "70%",
+      }}
+    >
+      {tueet?.text}
+    </div>
+  );
+};
+
 const InputField = ({ setText, text }) => {
   return (
     <div style={{ width: "70%" }}>
@@ -45,7 +62,16 @@ const CurrentTweet = ({ tueet }) => {
   console.log("tueettt ", tueet);
   return (
     <>
-      <div style={{ height: 200, width: "70%", backgroundColor: "#dedede" }}>
+      <div
+        style={{
+          marginTop: 30,
+          borderRadius: 5,
+          padding: 20,
+          height: 200,
+          width: "70%",
+          backgroundColor: "#dedede",
+        }}
+      >
         {tueet?.text}
       </div>
       <div
@@ -56,13 +82,21 @@ const CurrentTweet = ({ tueet }) => {
           height: 30,
           width: 100,
           backgroundColor: "#dedede",
-          alignSelf: "end",
           marginTop: 15,
           borderRadius: 5,
           textAlign: "center",
         }}
       >
-        <span>REFRESH</span>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
+          REFRESH
+        </div>
       </div>
     </>
   );
@@ -70,17 +104,20 @@ const CurrentTweet = ({ tueet }) => {
 
 function App() {
   const [tueet, setTueet] = useState("");
+  const [tueetSimilar, setTueetSimilar] = useState([]);
   const [text, setText] = useState("");
 
   useEffect(() => {
     fetch("http://localhost:8000/get/tueets")
       .then((res) => res.json())
       .then((res) => {
-        setTueet(res.data);
+        console.log("res data", res);
+        setTueet(res?.random);
+        setTueetSimilar(res?.similar);
       });
   }, []);
 
-  console.log(tueet);
+  console.log("---", tueet);
 
   return (
     <div className="custom-field">
@@ -103,31 +140,9 @@ function App() {
         <CurrentTweet tueet={tueet} />
       </div>
       <div style={{ flex: 1 }}>
-        <div
-          style={{
-            margin: 5,
-            backgroundColor: "red",
-            height: 200,
-            width: "70%",
-          }}
-        ></div>
-
-        <div
-          style={{
-            margin: 5,
-            backgroundColor: "red",
-            height: 200,
-            width: "70%",
-          }}
-        ></div>
-        <div
-          style={{
-            margin: 5,
-            backgroundColor: "red",
-            height: 200,
-            width: "70%",
-          }}
-        ></div>
+        {tueetSimilar.map((t, idx) => {
+          return <SimilarTueet tueet={t} key={idx} />;
+        })}
       </div>
     </div>
   );
