@@ -5,44 +5,80 @@ import "./App.css";
 const SimilarTueet = ({ tueet }) => {
   console.log("hee ", tueet);
   return (
-    <div
-      style={{
-        margin: 5,
-        backgroundColor: "#dedede",
-        borderRadius: 5,
-        height: 200,
-        width: "70%",
-      }}
-    >
-      {tueet?.text}
-    </div>
+    <>
+      <div
+        style={{
+          margin: 5,
+          backgroundColor: "#dedede",
+          borderRadius: 5,
+          height: 200,
+          width: "70%",
+        }}
+      >
+        {tueet?.text}
+      </div>
+    </>
   );
 };
 
 const InputField = ({ setText, text }) => {
   return (
-    <div style={{ width: "70%" }}>
+    <>
+      <div style={{ width: "70%" }}>
+        <div
+          style={{
+            flexDirection: "column",
+            flex: 1,
+            border: "1px solid",
+            borderRadius: "5px",
+            margin: "0px",
+          }}
+        >
+          <textarea
+            value={text}
+            maxLength={140}
+            placeholder={"What's on your mind?"}
+            style={{ flex: 1, border: "none", minHeight: "150px" }}
+            onChange={(e) => setText(e.target.value)}
+          />
+        </div>
+      </div>
       <div
+        onClick={() => {
+          setText("");
+          postTueets(text);
+        }}
         style={{
-          flexDirection: "column",
-          flex: 1,
-          border: "1px solid",
-          borderRadius: "5px",
-          margin: "0px",
+          height: 30,
+          width: 100,
+          backgroundColor: "#dedede",
+          marginTop: 15,
+          borderRadius: 5,
+          textAlign: "center",
         }}
       >
-        <textarea
-          value={text}
-          maxLength={140}
-          placeholder={"What's on your mind?"}
-          style={{ flex: 1, border: "none", minHeight: "150px" }}
-          onChange={(e) => setText(e.target.value)}
-        />
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            alignContent: "center",
+          }}
+        >
+          POST
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
+const postTueets = (text) => {
+  fetch("http://localhost:8000/post/tueet", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text }),
+  });
+};
 const HorizontalLine = () => {
   return (
     <div
