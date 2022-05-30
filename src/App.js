@@ -27,6 +27,14 @@ const InputField = ({ setText, text }) => {
   );
 };
 
+const postTueets = (text) => {
+  fetch("http://localhost:8000/post/tueet", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text }),
+  });
+};
+
 function App() {
   const [tueet, setTueet] = useState("");
   const [text, setText] = useState("");
